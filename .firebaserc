@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "firelayer-board"
+  },
+  "targets": {
+    "firelayer-board": {
+      "hosting": {
+        "board": [
+          "firelayer-board"
+        ]
+      }
+    }
+  }
+}
