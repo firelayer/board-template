@@ -3,7 +3,7 @@
     <v-row dense>
       <v-col cols="12">
         <v-card class="pa-2 text-center">
-          <div class="headline">Welcome to the Firelayer Board</div>
+          <div class="headline mb-1">Welcome to the <span class="primary--text">Firelayer</span> Suggestions Board</div>
           <p>If you would like to know more about Firelayer before continuing, go ahead and checkout the documentation website.</p>
           <v-btn
             class="mr-2"
@@ -35,14 +35,23 @@
       </v-col>
     </v-row>
 
-    <div v-if="!user.email" class="text-center my-2 primary--text">
-      You can add suggestions. <br>
-      To upvote a card you need to login with a verified account.
+    <div class="text-center mt-2">
+      <v-chip
+        v-if="!user.email"
+        class="accent pa-2"
+        x-large
+        outlined
+        label
+      >
+        You can add suggestions as anonymous.<br>
+        To upvote a card you need to login with a verified account.
+      </v-chip>
     </div>
 
     <div class="board my-4">
       <div v-for="list in lists" :key="list.id" class="board-column">
-        <div class="caption text-uppercase font-weight-bold">{{ list.label }}</div>
+        <div class="text-uppercase font-weight-bold primary--text board-column-label">{{ list.label }}</div>
+        <div class="board-column-description caption">{{ list.description }}</div>
 
         <v-btn
           small
@@ -168,16 +177,20 @@ export default {
       cards: [],
       lists: [{
         id: 0,
-        label: 'Templates (Apps Presets)'
-      }, {
-        id: 1,
-        label: 'Firelayer - Features'
+        label: 'Templates (Apps Presets)',
+        description: 'Web apps fully integrated with Firebase (blog, chat, chrome extension, etc)'
       }, {
         id: 2,
-        label: 'Dashboard - Features'
+        label: 'Dashboard TEMPLATE',
+        description: 'Integrated with Firebase (User management, CMS, email integrations, etc)'
+      }, {
+        id: 1,
+        label: 'Firelayer CLI',
+        description: 'Database seed, migrations, run backups, CI integrations'
       }, {
         id: 3,
-        label: 'Random'
+        label: 'Random',
+        description: 'Random feedback or suggestions'
       }],
 
       isLoadingSave: false,
@@ -328,6 +341,16 @@ export default {
     margin-right: 8px;
     padding: 8px;
     border-radius: 6px;
+
+    &-label {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &-description {
+      min-height: 80px;
+    }
 
     &:last-of-type {
       margin-right: 0;
