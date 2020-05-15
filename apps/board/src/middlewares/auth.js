@@ -11,7 +11,7 @@ async function onUserUpdate(user) {
     router.push({ name: 'board' })
   }
 
-  store.commit('app/INITIALIZED', { user: { uid: user.uid, email: user.email, displayName: user.displayName || `anonymous-${user.uid.substr(0, 6)}` } })
+  store.commit('app/INITIALIZED', { user: { uid: user.uid, email: user.email, displayName: user.displayName || `anon-${user.uid.substr(0, 4)}` } })
   store.commit('app/SET_ISAPPREADY', true)
 }
 

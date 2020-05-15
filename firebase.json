@@ -1,6 +1,6 @@
 {
-  "firestore": {
-    "rules": "rules/firestore.rules"
+  "database": {
+    "rules": "rules/database.rules"
   },
   "hosting": [
     {

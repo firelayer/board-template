@@ -56,12 +56,12 @@
 
         <transition-group name="list">
           <v-card v-for="card in parse(cards, list.id)" :key="card.id" class="board-item elevation-1 pa-1">
-            <div class="mb-2">{{ card.data.text }}</div>
-            <div v-if="card.data.votes" class="text-right">
+            <div class="mb-2">{{ card.t }}</div>
+            <div v-if="card.votes" class="text-right">
               <v-divider></v-divider>
               <div class="d-flex flex-grow align-center">
                 <v-chip
-                  v-if="user.uid === card.data.uid"
+                  v-if="user.uid === card.u"
                   color="secondary"
                   small
                   label
@@ -69,7 +69,7 @@
                   Owner
                 </v-chip>
                 <v-btn
-                  v-if="user.email && card.data.votes.indexOf && card.data.votes.indexOf(user.uid) === -1"
+                  v-if="user.email && card.votes.indexOf && card.votes.indexOf(user.uid) === -1"
                   outlined
                   small
                   color="primary"
@@ -81,16 +81,16 @@
                 <v-spacer></v-spacer>
                 <div class="caption ma-1 primary--text d-flex font-weight-bold">
                   <v-icon small color="primary">mdi-chevron-up</v-icon>
-                  {{ card.data.votes && card.data.votes.length }}
+                  {{ card.votes && card.votes.length }}
                 </div>
               </div>
             </div>
 
             <v-divider></v-divider>
-            <div class="caption text-right">{{ card.data.name }}</div>
+            <div class="caption text-right">{{ card.n }}</div>
 
             <!-- options menu -->
-            <v-menu v-if="card.data.uid === user.uid" offset-y left>
+            <v-menu v-if="card.u === user.uid" offset-y left>
               <template v-slot:activator="{ on }">
                 <v-btn icon x-small class="board-item-menu" v-on="on">
                   <v-icon color="grey darken-2">mdi-dots-vertical</v-icon>
@@ -126,8 +126,8 @@
           ></v-text-field>
           <v-text-field
             v-model="newCardName"
-            maxlength="20"
-            counter="20"
+            maxlength="10"
+            counter="10"
             label="User display name"
             @keyup.enter="addCard()"
           ></v-text-field>
@@ -156,8 +156,10 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { db } from '../../firebase'
-import Card from '../../models/Card'
+import { realtime, TIMESTAMP } from '../../firebase'
+import uniqueid from '../../utils/uniqueid'
+
+const cardsRef = realtime().ref('cards/')
 
 export default {
   data() {
@@ -165,16 +167,16 @@ export default {
       unsubscribe: null,
       cards: [],
       lists: [{
-        id: 'templates',
+        id: 0,
         label: 'Templates (Apps Presets)'
       }, {
-        id: 'firelayer',
+        id: 1,
         label: 'Firelayer - Features'
       }, {
-        id: 'dashboard',
+        id: 2,
         label: 'Dashboard - Features'
       }, {
-        id: 'random',
+        id: 3,
         label: 'Random'
       }],
 
@@ -198,10 +200,10 @@ export default {
   mounted() {
     this.getBoard()
 
-    this.newCardName = this.user.displayName
+    this.newCardName = this.user.displayName.substr(0, 10)
   },
   beforeDestroy() {
-    if (this.unsubscribe) this.unsubscribe()
+    cardsRef.off()
   },
   methods: {
     ...mapActions('app', ['showError', 'showToast', 'showSuccess']),
@@ -214,18 +216,27 @@ export default {
       this.deleteDialog = true
     },
     parse(cards, listId) {
-      return cards.filter((card) => card.data.list === listId).sort((a,b) => {
-        if (a.data.votes.length < b.data.votes.length) return 1
-        if (a.data.votes.length > b.data.votes.length) return -1
+      return cards.filter((card) => card.l === listId).sort((a,b) => {
+        if (a.votes.length < b.votes.length) return 1
+        if (a.votes.length > b.votes.length) return -1
 
         return 0
       })
     },
     async getBoard() {
-      this.unsubscribe = db().collection('cards').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+      cardsRef.on('value', (snapshot) => {
         const cards = []
 
-        snapshot.forEach((doc) => cards.push(new Card(doc)))
+        snapshot.forEach((childSnapshot) => {
+          const doc = childSnapshot.val()
+          const votes = Object.keys(doc.v || {})
+
+          cards.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val(),
+            votes
+          })
+        })
 
         this.cards = cards
       })
@@ -239,16 +250,21 @@ export default {
 
       this.isLoadingSave = true
 
-      const card = new Card()
-
       try {
-        await card.save({
-          list: this.addToList.id,
-          text: this.newCardText,
-          uid: this.user.uid,
-          name: this.newCardName || `anonymous-${this.user.uid.substr(0, 6)}`,
-          votes: [this.user.uid]
-        })
+        // votes
+        const v = {}
+
+        v[this.user.uid] = 1
+
+        const newCard = {
+          l: this.addToList.id,
+          t: this.newCardText,
+          u: this.user.uid,
+          n: this.newCardName || `anon-${this.user.uid.substr(0, 4)}`,
+          v
+        }
+
+        await cardsRef.child(uniqueid(4)).set(newCard)
 
         this.showSuccess('Card Added!')
       } catch (error) {
@@ -263,7 +279,7 @@ export default {
       this.isLoadingDelete = true
 
       try {
-        await this.cardToDelete.delete()
+        await cardsRef.child(this.cardToDelete.id).remove()
       } catch (error) {
         this.showError({ error })
       }
@@ -274,9 +290,7 @@ export default {
     },
     async upvote(card) {
       try {
-        await card.save({
-          votes: db.FieldValue.arrayUnion(this.user.uid)
-        })
+        await cardsRef.child(`${card.id}/v/${this.user.uid}`).set(1)
       } catch (error) {
         this.showError({ error })
       }
@@ -313,7 +327,7 @@ export default {
     min-width: 200px;
     margin-right: 8px;
     padding: 8px;
-    border-radius: 3px;
+    border-radius: 6px;
 
     &:last-of-type {
       margin-right: 0;
@@ -328,12 +342,8 @@ export default {
   .board-item {
     position: relative;
     margin-bottom: 8px;
-    border-radius: 3px;
+    border-radius: 6px;
     min-height: 60px;
-
-    &:hover {
-      box-shadow: 0 0 4px #0000004d;
-    }
   }
 
   .board-item-menu {

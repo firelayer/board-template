@@ -1,0 +1,42 @@
+{
+  "rules": {
+    "cards": {
+      // any auth user can list cards
+      ".read": "auth != null",
+
+      "$card": {
+        ".write": "auth != null && (data.exists() && !newData.exists()) ? data.child('u').val() == auth.uid : (!data.exists() || (data.exists() && auth.provider != 'anonymous'))",
+
+        ".validate": "$card.length == 4 && ((data.exists() && newData.hasChild('v')) || newData.hasChildren(['n', 't', 'l', 'u', 'v']))",
+
+        // name
+        "n": {
+          ".validate": "!data.exists() && newData.isString() && newData.val().length > 0 && newData.val().length <= 10"
+        },
+        // text
+        "t": {
+          ".validate": "!data.exists() && newData.isString() && newData.val().length > 0 && newData.val().length <= 150"
+        },
+        // uid
+        "u": {
+          ".validate": "!data.exists() && newData.val() == auth.uid"
+        },
+        // list
+        "l": {
+          ".validate": "!data.exists() && (newData.val() >= 0 && newData.val() < 4)"
+        },
+        // votes
+        "v": {
+          ".validate": "newData.hasChild(auth.uid)",
+
+          "$uid": {
+            ".validate": "!data.exists() && auth.uid == $uid && newData.val() == 1"
+          }
+        },
+
+        // no other fields
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}
