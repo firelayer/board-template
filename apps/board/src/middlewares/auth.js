@@ -11,7 +11,16 @@ async function onUserUpdate(user) {
     router.push({ name: 'board' })
   }
 
-  store.commit('app/INITIALIZED', { user: { uid: user.uid, email: user.email, displayName: user.displayName || `anon-${user.uid.substr(0, 4)}` } })
+  const token = await user.getIdTokenResult(true)
+  const { claims } = token
+  const isAdmin = claims && claims.admin === 1
+
+  store.commit('app/INITIALIZED', { user: {
+    uid: user.uid,
+    email: user.email,
+    displayName: user.displayName || `anon-${user.uid.substr(0, 4)}`,
+    admin: isAdmin
+  } })
   store.commit('app/SET_ISAPPREADY', true)
 }
 

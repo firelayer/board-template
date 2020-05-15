@@ -97,7 +97,7 @@
             <div class="caption text-right">{{ card.n }}</div>
 
             <!-- options menu -->
-            <v-menu v-if="card.u === user.uid" offset-y left>
+            <v-menu v-if="user.admin || card.u === user.uid" offset-y left>
               <template v-slot:activator="{ on }">
                 <v-btn icon x-small class="board-item-menu" v-on="on">
                   <v-icon color="grey darken-2">mdi-dots-vertical</v-icon>

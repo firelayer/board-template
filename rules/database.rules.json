@@ -1,5 +1,7 @@
 {
   "rules": {
+    ".write": "auth.token.admin == 1",
+
     "_settings": {
       ".read": true,
       ".write": false
