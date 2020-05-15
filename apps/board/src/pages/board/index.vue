@@ -54,10 +54,8 @@
         <div class="board-column-description caption">{{ list.description }}</div>
 
         <v-btn
-          small
-          outlined
           class="justify-start mt-1 mb-2"
-          text
+          color="primary"
           @click="openAdd(list)"
         >
           <v-icon small left>mdi-plus</v-icon> Add a Suggestion
