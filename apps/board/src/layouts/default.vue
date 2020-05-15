@@ -17,7 +17,18 @@
     <v-content>
       <v-container fill-height fluid>
         <v-layout>
-          <slot></slot>
+          <slot v-if="user && !settings.maintenance"></slot>
+          <div v-if="settings.maintenance" class="my-5 text-center d-flex flex-column flex-grow-1">
+            <v-img
+              class="mb-5"
+              height="200px"
+              contain
+              src="/images/maintenance.svg"
+            ></v-img>
+
+            <h1>In Maintenance</h1>
+            <p>We promise to be quick. Please come back later.</p>
+          </div>
         </v-layout>
       </v-container>
     </v-content>
@@ -25,11 +36,30 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
+import { realtime } from '../firebase'
 import UserMenu from '../components/common/UserMenu'
 
 export default {
   components: {
     UserMenu
+  },
+  computed: {
+    ...mapState('app', ['user', 'settings'])
+  },
+  mounted() {
+    realtime().ref('/_settings').on('value', (snapshot) => {
+      console.log('hello')
+      this.setSettings(snapshot.val() || this.settings)
+    })
+  },
+  beforeDestroy() {
+    realtime().ref('/_settings').off()
+  },
+  methods: {
+    ...mapMutations('app', {
+      setSettings: 'SET_SETTINGS'
+    })
   }
 }
 </script>

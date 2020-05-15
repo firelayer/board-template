@@ -11,7 +11,12 @@ const state = {
 
   // User
   user: null,
-  isAppReady: false
+  isAppReady: false,
+
+  // App
+  settings: {
+    maintenance: false
+  }
 }
 
 export default {

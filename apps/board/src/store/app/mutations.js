@@ -29,5 +29,8 @@ export default {
   },
   SET_ISAPPREADY: (state, isAppReady) => {
     state.isAppReady = isAppReady
+  },
+  SET_SETTINGS: (state, settings) => {
+    state.settings = settings
   }
 }

@@ -1,5 +1,10 @@
 {
   "rules": {
+    "_settings": {
+      ".read": true,
+      ".write": false
+    },
+
     "cards": {
       // any auth user can list cards
       ".read": "auth != null",
