@@ -2,6 +2,8 @@
   <img src="https://user-images.githubusercontent.com/3942799/78354854-884c2780-75a4-11ea-9882-a716e2095e98.png" alt="Firelayer" width="400" />
 </a>
 
+> https://board.firelayer.io
+
 <br/>
 
 ### Firelayer Documentation
@@ -34,7 +36,7 @@ To start run **`yarn dev`** or **`npm run dev`** and the three applications shou
 ## Content
 
 #### [`apps/board` Board](/apps/board/README.md)
-- Trello like board for Firestore
+- Suggestion Board for Realtime Database
 - Vue & Vuetify Components
 
 ## Development

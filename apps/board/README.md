@@ -8,11 +8,3 @@
 
 ## Board
 
-### Configurations
-```json
-{
-  "pagination": {
-    "limit": 15
-  }
-}
-```
