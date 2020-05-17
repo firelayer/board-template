@@ -3,7 +3,7 @@
 | Firelayer Template Config File
 |---------------------------------------------------------------------
 |
-| Board - Default template for `firelayer init`
+| Suggestion Board
 |
 */
 module.exports = async function({ chalk, open, logger, prompt, targetDir }) {
