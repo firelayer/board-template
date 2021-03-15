@@ -5,8 +5,8 @@
       height="200px"
       contain
       src="/images/alien.svg"
-    ></v-img>
+    />
 
-    <slot />
+    <slot></slot>
   </div>
 </template>

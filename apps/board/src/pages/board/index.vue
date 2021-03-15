@@ -21,13 +21,13 @@
             Github
           </v-btn>
           <div>
-            <v-divider></v-divider>
-            This board is also available as a Firelayer template <br>
+            <v-divider/>
+            This board is also available as a Firelayer template <br/>
             <code>firelayer init myboard -t board</code>
-            <v-divider></v-divider>
+            <v-divider/>
             <div>
               Thank you for participating. Your feedback is very much appreciated.
-              <br>
+              <br/>
               On the board bellow you can create new suggestions or <v-icon small color="primary">mdi-menu-up</v-icon> upvote existing ones.
             </div>
           </div>
@@ -43,7 +43,7 @@
         outlined
         label
       >
-        You can add suggestions as anonymous.<br>
+        You can add suggestions as anonymous.<br/>
         To upvote a card you need to login with a verified account.
       </v-chip>
     </div>
@@ -65,7 +65,7 @@
           <v-card v-for="card in parse(cards, list.id)" :key="card.id" class="board-item elevation-1 pa-1">
             <div class="mb-2">{{ card.t }}</div>
             <div v-if="card.votes" class="text-right">
-              <v-divider></v-divider>
+              <v-divider/>
               <div class="d-flex flex-grow align-center">
                 <v-chip
                   v-if="user.uid === card.u"
@@ -85,7 +85,7 @@
                   Upvote
                   <v-icon right>mdi-menu-up</v-icon>
                 </v-btn>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <div class="caption ma-1 primary--text d-flex font-weight-bold">
                   <v-icon small color="primary">mdi-chevron-up</v-icon>
                   {{ card.votes && card.votes.length }}
@@ -93,12 +93,12 @@
               </div>
             </div>
 
-            <v-divider></v-divider>
+            <v-divider/>
             <div class="caption text-right">{{ card.n }}</div>
 
             <!-- options menu -->
             <v-menu v-if="user.admin || card.u === user.uid" offset-y left>
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <v-btn icon x-small class="board-item-menu" v-on="on">
                   <v-icon color="grey darken-2">mdi-dots-vertical</v-icon>
                 </v-btn>
@@ -130,17 +130,17 @@
             counter="150"
             autofocus
             @keyup.enter="addCard()"
-          ></v-text-field>
+          />
           <v-text-field
             v-model="newCardName"
             maxlength="10"
             counter="10"
             label="User display name"
             @keyup.enter="addCard()"
-          ></v-text-field>
+          />
         </div>
         <v-card-actions class="pa-2">
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn @click="addDialog = false">Cancel</v-btn>
           <v-btn :loading="isLoadingSave" color="success" @click="addCard()">Save</v-btn>
         </v-card-actions>
@@ -152,7 +152,7 @@
         <v-card-title class="headline">Delete Card</v-card-title>
         <v-card-text>Are you sure you want to delete this card?</v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn @click="deleteDialog = false">Cancel</v-btn>
           <v-btn :loading="isLoadingDelete" color="error" @click="deleteCard()">Delete</v-btn>
         </v-card-actions>
@@ -176,19 +176,19 @@ export default {
       lists: [{
         id: 0,
         label: 'Templates (Apps Presets)',
-        description: 'Web apps fully integrated with Firebase (blog, chat, chrome extension, etc)'
+        description: 'Web apps fully integrated with Firebase (blog, chat, chrome extension, etc)',
       }, {
         id: 2,
         label: 'Dashboard TEMPLATE',
-        description: 'Integrated with Firebase (User management, CMS, email integrations, etc)'
+        description: 'Integrated with Firebase (User management, CMS, email integrations, etc)',
       }, {
         id: 1,
         label: 'Firelayer CLI',
-        description: 'Database seed, migrations, run backups, CI integrations'
+        description: 'Database seed, migrations, run backups, CI integrations',
       }, {
         id: 3,
         label: 'Random',
-        description: 'Random feedback or suggestions'
+        description: 'Random feedback or suggestions',
       }],
 
       isLoadingSave: false,
@@ -202,11 +202,11 @@ export default {
       // delete variables
       deleteDialog: false,
       cardToDelete: null,
-      isLoadingDelete: false
+      isLoadingDelete: false,
     }
   },
   computed: {
-    ...mapState('app', ['user'])
+    ...mapState('app', ['user']),
   },
   mounted() {
     this.getBoard()
@@ -245,7 +245,7 @@ export default {
           cards.push({
             id: childSnapshot.key,
             ...childSnapshot.val(),
-            votes
+            votes,
           })
         })
 
@@ -272,7 +272,7 @@ export default {
           t: this.newCardText,
           u: this.user.uid,
           n: this.newCardName || `anon-${this.user.uid.substr(0, 4)}`,
-          v
+          v,
         }
 
         await cardsRef.child(uniqueid(4)).set(newCard)
@@ -305,8 +305,8 @@ export default {
       } catch (error) {
         this.showError({ error })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

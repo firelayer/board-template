@@ -24,16 +24,16 @@ export default {
   components: {
     initialLayout,
     defaultLayout,
-    errorLayout
+    errorLayout,
   },
   computed: {
     ...mapState('app', ['toast', 'isAppReady']),
-    currentLayout: function() {
+    currentLayout: function () {
       const layout = this.$route.meta.layout || 'default'
 
       return layout + 'Layout'
-    }
-  }
+    },
+  },
 }
 </script>
 

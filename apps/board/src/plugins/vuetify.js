@@ -13,11 +13,11 @@ export default new Vuetify({
         error: '#e06b6b',
         info: '#7da3bf',
         success: '#6bc56f',
-        warning: '#ead11a'
-      }
-    }
+        warning: '#ead11a',
+      },
+    },
   },
   icons: {
-    iconfont: 'mdi'
-  }
+    iconfont: 'mdi',
+  },
 })

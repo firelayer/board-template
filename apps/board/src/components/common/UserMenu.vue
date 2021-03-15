@@ -1,6 +1,6 @@
 <template>
   <v-menu v-if="user" offset-y bottom left>
-    <template v-slot:activator="{ on }">
+    <template #activator="{ on }">
       <v-btn icon v-on="on">
         <v-avatar size="40" color="elevation-1">
           <v-img v-if="user.photoURL" :src="user.photoURL" />
@@ -17,10 +17,10 @@
             dense
             inset
             label="Dark mode"
-          ></v-switch>
+          />
         </v-list-item-title>
       </v-list-item>
-      <v-divider></v-divider>
+      <v-divider/>
       <v-list-item @click="signOut">
         <v-list-item-title>Sign Out</v-list-item-title>
       </v-list-item>
@@ -35,11 +35,11 @@ import { auth } from '../../firebase'
 export default {
   data() {
     return {
-      darkMode: false
+      darkMode: false,
     }
   },
   computed: {
-    ...mapState('app', ['user'])
+    ...mapState('app', ['user']),
   },
   created() {
     try {
@@ -74,7 +74,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    }
-  }
+    },
+  },
 }
 </script>

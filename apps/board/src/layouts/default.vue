@@ -4,17 +4,17 @@
     <v-app-bar app flat color="transparent pa-1">
       <v-card class="flex-grow-1 d-flex pa-1 mt-2 align-center">
         <a href="https://firelayer.io" target="_blank">
-          <img src="/images/firelayer.png" height="38" class="ml-1" alt="firelayer">
+          <img src="/images/firelayer.png" height="38" class="ml-1" alt="firelayer"/>
         </a>
-        <v-spacer></v-spacer>
+        <v-spacer/>
         <v-btn class="mr-1" href="https://github.com/firelayer/firelayer" target="_blank" icon>
           <v-icon>mdi-github</v-icon>
         </v-btn>
-        <UserMenu></UserMenu>
+        <UserMenu/>
       </v-card>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container fill-height fluid>
         <v-layout>
           <slot v-if="user && !settings.maintenance"></slot>
@@ -24,14 +24,14 @@
               height="200px"
               contain
               src="/images/maintenance.svg"
-            ></v-img>
+            />
 
             <h1>In Maintenance</h1>
             <p>We promise to be quick. Please come back later.</p>
           </div>
         </v-layout>
       </v-container>
-    </v-content>
+    </v-main>
   </div>
 </template>
 
@@ -42,14 +42,13 @@ import UserMenu from '../components/common/UserMenu'
 
 export default {
   components: {
-    UserMenu
+    UserMenu,
   },
   computed: {
-    ...mapState('app', ['user', 'settings'])
+    ...mapState('app', ['user', 'settings']),
   },
   mounted() {
     realtime().ref('/_settings').on('value', (snapshot) => {
-      console.log('hello')
       this.setSettings(snapshot.val() || this.settings)
     })
   },
@@ -58,8 +57,8 @@ export default {
   },
   methods: {
     ...mapMutations('app', {
-      setSettings: 'SET_SETTINGS'
-    })
-  }
+      setSettings: 'SET_SETTINGS',
+    }),
+  },
 }
 </script>

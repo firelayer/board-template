@@ -25,7 +25,7 @@
       :width="3"
       color="red"
       indeterminate
-    ></v-progress-circular>
+    />
   </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
   middleware: ['redirectIfAuth'],
   data() {
     return {
-      isLoading: false
+      isLoading: false,
     }
   },
   mounted() {
@@ -61,7 +61,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    }
-  }
+    },
+  },
 }
 </script>

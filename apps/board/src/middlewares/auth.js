@@ -19,7 +19,7 @@ async function onUserUpdate(user) {
     uid: user.uid,
     email: user.email,
     displayName: user.displayName || `anon-${user.uid.substr(0, 4)}`,
-    admin: isAdmin
+    admin: isAdmin,
   } })
   store.commit('app/SET_ISAPPREADY', true)
 }

@@ -5,7 +5,7 @@ const showToast = ({ state, commit }, message) => {
     commit('SHOW_TOAST', {
       color: 'black',
       message,
-      timeout: 3000
+      timeout: 3000,
     })
   })
 }
@@ -17,7 +17,7 @@ const showError = ({ state, commit }, { message = 'Failed!', error }) => {
     commit('SHOW_TOAST', {
       color: 'error',
       message: message + ' ' + error.message,
-      timeout: 10000
+      timeout: 10000,
     })
   })
 }
@@ -29,7 +29,7 @@ const showSuccess = ({ state, commit }, message) => {
     commit('SHOW_TOAST', {
       color: 'success',
       message,
-      timeout: 3000
+      timeout: 3000,
     })
   })
 }
@@ -37,5 +37,5 @@ const showSuccess = ({ state, commit }, message) => {
 export default {
   showToast,
   showError,
-  showSuccess
+  showSuccess,
 }
