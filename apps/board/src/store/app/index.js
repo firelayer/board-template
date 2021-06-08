@@ -6,7 +6,7 @@ const state = {
     show: false,
     color: 'black',
     message: '',
-    timeout: 3000,
+    timeout: 3000
   },
 
   // User
@@ -15,13 +15,13 @@ const state = {
 
   // App
   settings: {
-    maintenance: false,
-  },
+    maintenance: false
+  }
 }
 
 export default {
   namespaced: true,
   state,
   actions,
-  mutations,
+  mutations
 }

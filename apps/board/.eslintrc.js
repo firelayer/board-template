@@ -1,6 +1,9 @@
 module.exports = {
   root: true,
   extends: [
-    '@indielayer/eslint-config-vue',
+    '@firelayer/eslint-config-vue'
   ],
+  rules: {
+    '@typescript-eslint/explicit-module-boundary-types': 0
+  }
 }

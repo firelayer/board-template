@@ -6,7 +6,7 @@ export default {
       message,
       color,
       timeout,
-      show: true,
+      show: true
     }
   },
   HIDE_TOAST: (state) => {
@@ -17,7 +17,7 @@ export default {
       show: false,
       color: 'black',
       message: '',
-      timeout: 3000,
+      timeout: 3000
     }
 
     // User
@@ -32,5 +32,5 @@ export default {
   },
   SET_SETTINGS: (state, settings) => {
     state.settings = settings
-  },
+  }
 }

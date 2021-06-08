@@ -6,8 +6,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    app: AppModule,
-  },
+    app: AppModule
+  }
 })
 
 export default store

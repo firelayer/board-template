@@ -26,7 +26,8 @@
     "yarn": ">= 1.12.0"
   },
   "devDependencies": {
-    "@indielayer/eslint-config": "^2.1.0",
+    "@firelayer/eslint-config": "^1.3.2",
+    "@firelayer/eslint-config-vue": "^1.3.3",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",

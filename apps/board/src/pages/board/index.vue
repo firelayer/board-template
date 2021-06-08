@@ -176,19 +176,19 @@ export default {
       lists: [{
         id: 0,
         label: 'Templates (Apps Presets)',
-        description: 'Web apps fully integrated with Firebase (blog, chat, chrome extension, etc)',
+        description: 'Web apps fully integrated with Firebase (blog, chat, chrome extension, etc)'
       }, {
         id: 2,
         label: 'Dashboard TEMPLATE',
-        description: 'Integrated with Firebase (User management, CMS, email integrations, etc)',
+        description: 'Integrated with Firebase (User management, CMS, email integrations, etc)'
       }, {
         id: 1,
         label: 'Firelayer CLI',
-        description: 'Database seed, migrations, run backups, CI integrations',
+        description: 'Database seed, migrations, run backups, CI integrations'
       }, {
         id: 3,
         label: 'Random',
-        description: 'Random feedback or suggestions',
+        description: 'Random feedback or suggestions'
       }],
 
       isLoadingSave: false,
@@ -202,11 +202,11 @@ export default {
       // delete variables
       deleteDialog: false,
       cardToDelete: null,
-      isLoadingDelete: false,
+      isLoadingDelete: false
     }
   },
   computed: {
-    ...mapState('app', ['user']),
+    ...mapState('app', ['user'])
   },
   mounted() {
     this.getBoard()
@@ -245,7 +245,7 @@ export default {
           cards.push({
             id: childSnapshot.key,
             ...childSnapshot.val(),
-            votes,
+            votes
           })
         })
 
@@ -272,7 +272,7 @@ export default {
           t: this.newCardText,
           u: this.user.uid,
           n: this.newCardName || `anon-${this.user.uid.substr(0, 4)}`,
-          v,
+          v
         }
 
         await cardsRef.child(uniqueid(4)).set(newCard)
@@ -305,8 +305,8 @@ export default {
       } catch (error) {
         this.showError({ error })
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

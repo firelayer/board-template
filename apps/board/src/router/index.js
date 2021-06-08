@@ -10,22 +10,22 @@ export const routes = [{
   component: () => import(/* webpackChunkName: "login" */ '@/pages/initial/login.vue'),
   meta: {
     layout: 'initial',
-    redirectIfAuth: true,
-  },
+    redirectIfAuth: true
+  }
 }, {
   path: '/board',
   name: 'board',
   component: () => import(/* webpackChunkName: "board" */ '@/pages/board/index.vue'),
   meta: {
-    requiresAuth: true,
-  },
+    requiresAuth: true
+  }
 }, {
   path: '*',
   name: 'error',
   component: () => import(/* webpackChunkName: "error" */ '@/pages/error/index.vue'),
   meta: {
-    layout: 'error',
-  },
+    layout: 'error'
+  }
 }]
 
 const router = new Router({
@@ -36,7 +36,7 @@ const router = new Router({
 
     return { x: 0, y: 0 }
   },
-  routes,
+  routes
 })
 
 let firstRoute = true
@@ -59,13 +59,13 @@ router.beforeEach((to, from, next) => {
       return next()
     } else {
       return next({
-        name: 'login',
+        name: 'login'
       })
     }
   } else {
     if (currentUser && (to.matched.some((record) => record.meta.redirectIfAuth))) {
       return next({
-        name: 'board',
+        name: 'board'
       })
     }
   }

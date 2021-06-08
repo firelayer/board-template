@@ -35,11 +35,11 @@ import { auth } from '../../firebase'
 export default {
   data() {
     return {
-      darkMode: false,
+      darkMode: false
     }
   },
   computed: {
-    ...mapState('app', ['user']),
+    ...mapState('app', ['user'])
   },
   created() {
     try {
@@ -74,7 +74,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
-  },
+    }
+  }
 }
 </script>

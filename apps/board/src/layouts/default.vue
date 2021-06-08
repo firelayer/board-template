@@ -42,10 +42,10 @@ import UserMenu from '../components/common/UserMenu'
 
 export default {
   components: {
-    UserMenu,
+    UserMenu
   },
   computed: {
-    ...mapState('app', ['user', 'settings']),
+    ...mapState('app', ['user', 'settings'])
   },
   mounted() {
     realtime().ref('/_settings').on('value', (snapshot) => {
@@ -57,8 +57,8 @@ export default {
   },
   methods: {
     ...mapMutations('app', {
-      setSettings: 'SET_SETTINGS',
-    }),
-  },
+      setSettings: 'SET_SETTINGS'
+    })
+  }
 }
 </script>
