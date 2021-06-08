@@ -20,7 +20,7 @@ module.exports = {
     progress: false,
     proxy: {
       '/api': {
-        target: `http://localhost:5000/${config.firebase.projectId}/api`,
+        target: `http://localhost:5000/${config.firebase.projectId}/us-central1/api`,
       },
     },
   },
